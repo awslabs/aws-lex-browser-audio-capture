@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>AmazonLex</title>
+    <meta name="author" content="lafranch">
+    <meta name="description" content="Lex Runtime example from the browser.">
+    <meta name="keywords" content="Amazon Lex, SDK, Runtime, Browser, JavaScript">
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="wrapper">
+    <div class="audio-control">
+        <p id="audio-control" class="white-circle">
+            <img src="images/lex.png">
+            <canvas class="visualizer"></canvas>
+        </p>
+        <p><span id="message"></span></p>
+        <p>
+            <input type="text" id="ACCESS_ID" name="ACCESS ID" placeholder="Access Id" />
+        </p>
+        <p>
+            <input type="text" id="SESSION_TOKEN" name="SESSION TOKEN" placeholder="Session Token" />
+        </p>
+        <p>
+            <input type="text" id="BOT" name="BOT" placeholder="Bot Name" />
+        </p>
+    </div>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.48.0.min.js"></script>
+    <script type="text/javascript">
+    window.lexaudio = {};
+    </script>
+    <script src="scripts/control.js" type="text/javascript"></script>
+    <script src="scripts/recorder.js" type="text/javascript"></script>
+    <script src="scripts/renderer.js" type="text/javascript"></script>
+    <script src="scripts/conversation.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);
+    else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));
+    else window.onload = new lexaudio.example();
+    </script>
+</body>
+
+</html>
