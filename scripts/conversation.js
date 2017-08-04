@@ -129,7 +129,7 @@
           };
           lexruntime = new AWS.LexRuntime({
             region: 'us-east-1',
-            credentials: new AWS.Credentials(document.getElementById('ACCESS_ID').value, document.getElementById('SESSION_TOKEN').value, null)
+            credentials: new AWS.Credentials(document.getElementById('ACCESS_KEY_ID').value, document.getElementById('SECRET_KEY').value, null)
           });
           conversation.advanceConversation();
         };
