@@ -56,6 +56,9 @@
       };
 
       this.advanceConversation = function() {
+        if (this.message !== 'Passive...') {
+          return;
+        }
         currentState.advanceConversation();
       };
 
