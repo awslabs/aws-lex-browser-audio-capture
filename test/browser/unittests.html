@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Lex Audio Tests</title>
+    <link rel="stylesheet" href="mocha.css" type="text/css" charset="utf-8" />
+</head>
+<body>
+    <!-- Required for browser reporter -->
+    <div id="mocha"></div>
+
+    <!-- mocha -->
+    <script src="mocha.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        // This will be overridden by mocha-helper if you run with grunt
+        mocha.setup('bdd');
+    </script>
+
+    <script src="aws-sdk.min.js"></script>
+    <script src="Blob.js"></script>
+    <script src="aws-lex-audio.js" type="text/javascript" charset="utf-8"></script>
+    <script src="specs.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- run mocha -->
+    <script type="text/javascript" charset="utf-8">
+        if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+            mocha.run();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+#################
+## Vim
+#################
+
+*.swp
+
+#################
+## node
+#################
+
+node_modules
+
+#################
+## Intellij
+#################
+.idea/*
+out/*
+*.iml
+
+#################
+## Eclipse
+#################
+RemoteSystemsTempFiles/
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+build
+eclipse-bin/
+var
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+
+
+
+
+#################
+## idea
+#################
+.idea
+*.iml
+
+# OSX junk
+.DS_Store
+._*
+coverage_report
+
+
+# Build log files
+*.out
+*.log
