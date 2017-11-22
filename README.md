@@ -1,4 +1,4 @@
-# aws-lex-browser-audio-capture
+# LexAudio
 An example of using the Amazon Lex JavaScript SDK to send and receive audio from the Lex PostContent API. Demonstrates how to capture an audio device, record audio, convert the audio into a format that Lex will recognize, and play the response. All from a web browser.
 
 A companion blog post to the example code can be found [here](https://aws.amazon.com/blogs/ai/capturing-voice-input-in-a-browser/).
@@ -51,7 +51,7 @@ The Amazon Lex `conversation` object provides an abstraction on top of the Amazo
 AWS.config.region = 'us-east-1';
 AWS.config.credentials = ...;
 ```
-#### Create the `conversation` object
+#### Create the `conversation` object 
 ```
 var conversation = new LexAudio.conversation({lexConfig:{botName: 'BOT_NAME'}}, 
 function (state) { // Called on each state change.
@@ -67,7 +67,7 @@ function (timeDomain) { // Called with audio time domain data (useful for render
 ```
 conversation.advanceConversation();
 ```
-Advances the conversation from Passive to Listening. By default, silence detection will be used to transition to Sending and the conversation will continue Listenting, Sending, and Speaking until the Dialog state is Fulfilled, ReadyForFulfillment, or Failed. Here are the conversation state transitions.
+Advances the conversation from Passive to Listening. By default, silence detection will be used to transition to Sending and the conversation will continue Listenting, Sending, and Speaking until the Dialog state is [Fulfilled](http://docs.aws.amazon.com/lex/latest/dg/API_runtime_PostContent.html#API_runtime_PostContent_ResponseSyntax), [ReadyForFulfillment](http://docs.aws.amazon.com/lex/latest/dg/API_runtime_PostContent.html#API_runtime_PostContent_ResponseSyntax), or [Failed](http://docs.aws.amazon.com/lex/latest/dg/API_runtime_PostContent.html#API_runtime_PostContent_ResponseSyntax). Here are the conversation state transitions. 
 
 ```
                                        onPlaybackComplete and ElicitIntent | ConfirmIntent | ElicitSlot
@@ -89,11 +89,15 @@ Setting silence detection to false allows you to manually transition out of the 
 var conversation = new LexAudio.conversation({silenceDetection: false, lexConfig:{botName: 'BOT_NAME'}}, ... );
 ```
 
-Here is the complete configuration object. Everything except `botName` has a default value.
+You can pass silence detection configuration values to tune the silence detection algorithm. The `time` value is the amount of silence to wait for (in milliseconds). The `amplitude` is a threshold value (between 1 and -1). Above the `amplitude` threshold value is considered "noise". Below the `amplitude` threshold value is considered "silence". Here is the complete configuration object. Everything except `botName` has a default value.
 
 ```
 {
   silenceDetection: true, 
+  silenceDetectionConfig: {
+    time: 1500,
+    amplitude: 0.2
+  },
   lexConfig:{
     botName: 'BOT_NAME',
     botAlias: '$LATEST',
@@ -103,3 +107,6 @@ Here is the complete configuration object. Everything except `botName` has a def
   }
 }
 ```
+## Browser support
+This example code has been tested in the latest versions of Chrome and Firefox.
+

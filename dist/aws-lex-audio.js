@@ -242,23 +242,6 @@
 
     currentState = new Initial(this);
 
-    this.on = function(event, callback) {
-      switch (event) {
-        case 'stateChange':
-          onStateChange = callback;
-          break;
-        case 'success':
-          this.onSuccess = callback;
-          break;
-        case 'error':
-          this.onError = callback;
-          break;
-        case 'audioData':
-          onAudioData = callback;
-          break;
-      }
-    };
-
     this.updateConfig = function(newValue) {
       this.config = applyDefaults(newValue);
       this.lexConfig = this.config.lexConfig;
@@ -266,7 +249,6 @@
     
     return {
       advanceConversation: this.advanceConversation,
-      on: this.on,
       updateConfig: this.updateConfig
     };
   };
@@ -352,9 +334,7 @@
 /**
  * @module LexAudio
  * @description The global namespace for Amazon Lex Audio
- * @see LexAudio.control
  */
-// var audioControl = new LexAudio.control.audioControl();
 global.LexAudio = global.LexAudio || {};
 global.LexAudio.audioControl = require('./control.js').audioControl;
 global.LexAudio.conversation = require('./conversation.js').conversation;
@@ -569,6 +549,10 @@ module.exports = function (fn, options) {
     };
 
     var analyser = source.context.createAnalyser();
+    analyser.minDecibels = -90;
+    analyser.maxDecibels = -10;
+    analyser.smoothingTimeConstant = 0.85;
+
     source.connect(analyser);
     analyser.connect(node);
     node.connect(source.context.destination);
