@@ -235,7 +235,7 @@
         if (supported) {
           currentState.advanceConversation();
         } else {
-          this.onError('Audio is not supported.');
+          onError('Audio is not supported.');
         }
       });
     };
