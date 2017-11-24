@@ -38,10 +38,11 @@
     var config, conversation;
     message.textContent = 'Passive';
 
-    AWS.config.credentials = new AWS.Credentials(document.getElementById('ACCESS_ID').value, document.getElementById('SECRET_KEY').value, null);
-    AWS.config.region = 'us-east-1';
-
     document.getElementById('audio-control').onclick = function () {
+
+        AWS.config.credentials = new AWS.Credentials(document.getElementById('ACCESS_ID').value, document.getElementById('SECRET_KEY').value, null);
+        AWS.config.region = 'us-east-1';
+        
         config = {
             lexConfig: { botName: document.getElementById('BOT').value }
         };
