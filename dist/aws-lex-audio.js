@@ -11,8 +11,8 @@
    */
   exports.audioControl = function (options) {
     options = options || {};
-    checkAudioSupport = options.checkAudioSupport !== false;
-
+    this.checkAudioSupport = options.checkAudioSupport !== false;
+    
     /**
      * This callback type is called `onSilenceCallback`.
      *
@@ -147,7 +147,7 @@
       }
     };
 
-    if (checkAudioSupport) {
+    if (this.checkAudioSupport) {
       supportsAudio();
     }
 
