@@ -108,5 +108,7 @@ You can pass silence detection configuration values to tune the silence detectio
 }
 ```
 ## Browser support
-This example code has been tested in the latest versions of Chrome and Firefox.
-
+This example code has been tested in the latest versions of:
+* Chrome
+* Firefox
+* Safari

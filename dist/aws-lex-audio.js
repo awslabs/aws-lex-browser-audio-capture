@@ -98,7 +98,7 @@
      * @param {Uint8Array} buffer - The audio buffer to play.
      * @param {?onPlaybackComplete} callback - Called when audio playback is complete.
      */
-    var play = function (buffer, callback) {
+    var playHtmlAudioElement = function (buffer, callback) {
       if (typeof buffer === 'undefined') {
         return;
       }
@@ -114,6 +114,46 @@
       });
       audio.play();
       recorder.clear();
+    };
+
+    /**
+     * On playback complete callback: `onPlaybackComplete`.
+     *
+     * @callback onPlaybackComplete
+     */
+
+    /**
+     * Plays the audio buffer with a WebAudio AudioBufferSourceNode. 
+     * @param {Uint8Array} buffer - The audio buffer to play.
+     * @param {?onPlaybackComplete} callback - Called when audio playback is complete.
+     */
+    var play = function (buffer, callback) {
+      if (typeof buffer === 'undefined') {
+        return;
+      }
+      var myBlob = new Blob([buffer]);
+      // We'll use a FileReader to create and ArrayBuffer out of the audio response.
+      var fileReader = new FileReader();
+      fileReader.onload = function() {
+        // Once we have an ArrayBuffer we can create our BufferSource and decode the result as an AudioBuffer.
+        var source = audioRecorder.audioContext().createBufferSource();
+        audioRecorder.audioContext().decodeAudioData(this.result, function(buf) {
+          // Set the source buffer as our new AudioBuffer.
+          source.buffer = buf;
+          // Set the destination (the actual audio-rendering device--your device's speakers).
+          source.connect(audioRecorder.audioContext().destination);
+          // Add an "on ended" callback.
+          source.onended = function(event) {
+            if (typeof callback === 'function') {
+              callback();
+            }
+          };
+          // Start the playback.
+          source.start(0);
+        });
+        recorder.clear();
+      };
+      fileReader.readAsArrayBuffer(myBlob);
     };
 
     /**
@@ -156,6 +196,7 @@
       stopRecording: stopRecording,
       exportWAV: exportWAV,
       play: play,
+      playHtmlAudioElement: playHtmlAudioElement,
       supportsAudio: supportsAudio
     };
   };
@@ -590,9 +631,14 @@ module.exports = function (fn, options) {
       return recorder(audio_context.createMediaStreamSource(audio_stream, worker), silenceDetectionConfig);
     };
 
+    var audioContext = function () {
+      return audio_context;
+    };
+
     return {
       requestDevice: requestDevice,
-      createRecorder: createRecorder
+      createRecorder: createRecorder,
+      audioContext: audioContext
     };
 
   };
