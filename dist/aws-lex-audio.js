@@ -628,7 +628,7 @@ module.exports = function (fn, options) {
     };
 
     var createRecorder = function (silenceDetectionConfig) {
-      return recorder(audio_context.createMediaStreamSource(audio_stream, worker), silenceDetectionConfig);
+      return recorder(audio_context.createMediaStreamSource(audio_stream), silenceDetectionConfig);
     };
 
     var audioContext = function () {
