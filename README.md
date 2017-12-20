@@ -111,4 +111,4 @@ You can pass silence detection configuration values to tune the silence detectio
 This example code has been tested in the latest versions of:
 * Chrome
 * Firefox
-* Safari
+* Safari (on macOS)
