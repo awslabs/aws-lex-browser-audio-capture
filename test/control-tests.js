@@ -97,4 +97,13 @@ describe('LexAudio.audioControl', function () {
       });
     });
   });
+  describe('Stop', function () {
+    before(function () {
+      audioControl = new LexAudio.audioControl({});
+    });
+    it('gracefully handles undefined source', function () {
+      expect(audioControl.stop()).to.be.undefined;
+    });
+  });
+
 });

@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var rec = require('./recorder.js');
-  var recorder, audioRecorder, checkAudioSupport, audioSupported, UNSUPPORTED = 'Audio is not supported.';
+  var recorder, audioRecorder, checkAudioSupport, audioSupported, playbackSource, UNSUPPORTED = 'Audio is not supported.';
 
   /**
    * Represents an audio control that can start and stop recording,
@@ -136,24 +136,42 @@
       var fileReader = new FileReader();
       fileReader.onload = function() {
         // Once we have an ArrayBuffer we can create our BufferSource and decode the result as an AudioBuffer.
-        var source = audioRecorder.audioContext().createBufferSource();
+        playbackSource = audioRecorder.audioContext().createBufferSource();
         audioRecorder.audioContext().decodeAudioData(this.result, function(buf) {
           // Set the source buffer as our new AudioBuffer.
-          source.buffer = buf;
+          playbackSource.buffer = buf;
           // Set the destination (the actual audio-rendering device--your device's speakers).
-          source.connect(audioRecorder.audioContext().destination);
+          playbackSource.connect(audioRecorder.audioContext().destination);
           // Add an "on ended" callback.
-          source.onended = function(event) {
+          playbackSource.onended = function(event) {
             if (typeof callback === 'function') {
               callback();
             }
           };
           // Start the playback.
-          source.start(0);
+          playbackSource.start(0);
         });
         recorder.clear();
       };
       fileReader.readAsArrayBuffer(myBlob);
+    };
+
+    /**
+     * Stops the playback source (created by the play method) if it exists. The `onPlaybackComplete`
+     * callback will be called.
+     */
+    var stop = function() {
+      if (typeof playbackSource === 'undefined') {
+        return;
+      }
+      playbackSource.stop();
+    };
+
+    /**
+     * Clear the recording buffer.
+     */
+    var clear = function () {
+      recorder.clear();
     };
 
     /**
@@ -196,6 +214,8 @@
       stopRecording: stopRecording,
       exportWAV: exportWAV,
       play: play,
+      stop: stop,
+      clear: clear,
       playHtmlAudioElement: playHtmlAudioElement,
       supportsAudio: supportsAudio
     };
@@ -281,16 +301,22 @@
       });
     };
 
-    currentState = new Initial(this);
-
     this.updateConfig = function(newValue) {
       this.config = applyDefaults(newValue);
       this.lexConfig = this.config.lexConfig;
     };
+
+    this.reset = function() {
+      audioControl.clear();
+      currentState = new Initial(currentState.state);
+    };
+
+    currentState = new Initial(this);
     
     return {
       advanceConversation: this.advanceConversation,
-      updateConfig: this.updateConfig
+      updateConfig: this.updateConfig,
+      reset: this.reset
     };
   };
 
@@ -522,6 +548,7 @@ module.exports = function (fn, options) {
      * Posts "clear" message to the worker.
      */
     var clear = function () {
+      stop();
       worker.postMessage({command: 'clear'});
     };
 
