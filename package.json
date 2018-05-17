@@ -1,0 +1,67 @@
+{
+  "name": "aws-lex-browser-audio-capture",
+  "description": "Amazon Lex Audio SDK for JavaScript",
+  "version": "0.0.1",
+  "author": {
+    "name": "Amazon Web Services",
+    "email": "",
+    "url": "http://aws.amazon.com/"
+  },
+  "homepage": "https://github.com/awslabs/aws-lex-browser-audio-capture",
+  "contributors": [],
+  "devDependencies": {
+    "chai": "*",
+    "coffee-script": "~1.9.1",
+    "coffeeify": "1.0.0",
+    "grunt": "^1.0.1",
+    "grunt-blanket": "~0.0.8",
+    "grunt-browserify": "~3.5.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "grunt-contrib-watch": "*",
+    "grunt-mocha": "~0.4.12",
+    "grunt-mocha-test": "~0.12.7",
+    "mocha-cobertura-reporter": "~1.0.4",
+    "semver": "*",
+    "travis-cov": "~0.2.5",
+    "xml2js": "0.2.6"
+  },
+  "dependencies": {
+    "aws-sdk": ">=2.48.0",
+    "phantomjs": "^2.1.1"
+  },
+  "main": "lib/lex-audio.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/aws-lex-browser-audio-capture"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/aws-lex-browser-audio-capture/issues",
+    "mail": ""
+  },
+  "licenses": [
+    {
+      "type": "Copyright 2017 Amazon.com, Inc.",
+      "url": "https://github.com/awslabs/aws-lex-browser-audio-capture/blob/master/LICENSE"
+    }
+  ],
+  "keywords": [
+    "api",
+    "amazon",
+    "aws",
+    "lex"
+  ],
+  "scripts": {
+    "test": "grunt test",
+    "unit": "grunt test",
+    "distribution": "grunt dist"
+  }
+}
