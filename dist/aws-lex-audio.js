@@ -12,7 +12,7 @@
   exports.audioControl = function (options) {
     options = options || {};
     this.checkAudioSupport = options.checkAudioSupport !== false;
-    
+
     /**
      * This callback type is called `onSilenceCallback`.
      *
@@ -85,6 +85,7 @@
       }
       sampleRate = (typeof sampleRate !== 'undefined') ? sampleRate : 16000;
       recorder.exportWAV(callback, sampleRate);
+      recorder.clear();
     };
 
     /**
@@ -113,7 +114,6 @@
         }
       });
       audio.play();
-      recorder.clear();
     };
 
     /**
@@ -123,7 +123,7 @@
      */
 
     /**
-     * Plays the audio buffer with a WebAudio AudioBufferSourceNode. 
+     * Plays the audio buffer with a WebAudio AudioBufferSourceNode.
      * @param {Uint8Array} buffer - The audio buffer to play.
      * @param {?onPlaybackComplete} callback - Called when audio playback is complete.
      */
@@ -151,7 +151,6 @@
           // Start the playback.
           playbackSource.start(0);
         });
-        recorder.clear();
       };
       fileReader.readAsArrayBuffer(myBlob);
     };
@@ -221,6 +220,7 @@
     };
   };
 })();
+
 },{"./recorder.js":5}],2:[function(require,module,exports){
 (function() {
   'use strict';
@@ -312,7 +312,7 @@
     };
 
     currentState = new Initial(this);
-    
+
     return {
       advanceConversation: this.advanceConversation,
       updateConfig: this.updateConfig,
@@ -383,7 +383,7 @@
   var applyDefaults = function(config) {
     config = config || {};
     config.silenceDetection = config.hasOwnProperty('silenceDetection') ? config.silenceDetection : true;
-    
+
     var lexConfig = config.lexConfig || {};
     lexConfig.botAlias = lexConfig.hasOwnProperty('botAlias') ? lexConfig.botAlias : DEFAULT_LATEST;
     lexConfig.botName = lexConfig.hasOwnProperty('botName') ? lexConfig.botName : '';
@@ -396,6 +396,7 @@
   };
 
 })();
+
 },{"./control.js":1}],3:[function(require,module,exports){
 (function (global){
 /**
@@ -785,4 +786,5 @@ module.exports = function (self) {
     return view;
   }
 };
+
 },{}]},{},[3]);
