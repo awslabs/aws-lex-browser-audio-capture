@@ -707,7 +707,7 @@ module.exports = function (self) {
   function exportBuffer(exportSampleRate) {
     var mergedBuffers = mergeBuffers(recBuffer, recLength);
     var downsampledBuffer = downsampleBuffer(mergedBuffers, exportSampleRate);
-    var encodedWav = encodeWAV(downsampledBuffer);
+    var encodedWav = encodeWAV(downsampledBuffer, exportSampleRate);
     var audioBlob = new Blob([encodedWav], {type: 'application/octet-stream'});
     postMessage(audioBlob);
   }
@@ -764,7 +764,7 @@ module.exports = function (self) {
     }
   }
 
-  function encodeWAV(samples) {
+  function encodeWAV(samples, sampleRate) {
     var buffer = new ArrayBuffer(44 + samples.length * 2);
     var view = new DataView(buffer);
 
@@ -775,8 +775,8 @@ module.exports = function (self) {
     view.setUint32(16, 16, true);
     view.setUint16(20, 1, true);
     view.setUint16(22, 1, true);
-    view.setUint32(24, recordSampleRate, true);
-    view.setUint32(28, recordSampleRate * 2, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true);
     view.setUint16(32, 2, true);
     view.setUint16(34, 16, true);
     writeString(view, 36, 'data');
